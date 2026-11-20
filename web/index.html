@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SolRecon 合约审查台</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">◆</span>
+    <div>
+      <h1>SolRecon 合约审查台</h1>
+      <p class="sub">Solidity 静态检查 · 源码行级定位 · 本地运行（Go → WebAssembly）</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span id="engine-status" class="engine-status loading">引擎加载中…</span>
+    <button id="btn-analyze" class="btn primary" disabled>重新分析</button>
+    <button id="btn-export" class="btn" disabled>导出 JSON</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="panel samples" aria-label="样例合约">
+    <div class="panel-head">
+      <h2>样例合约</h2>
+      <span class="hint">问题版 / 修复版对照</span>
+    </div>
+    <div id="sample-list" class="sample-list"></div>
+    <div class="panel-foot">
+      <label class="upload">
+        <input id="file-input" type="file" accept=".sol,text/plain" multiple hidden>
+        打开本地 .sol 文件
+      </label>
+      <button id="btn-coverage" class="linkish">语法覆盖范围</button>
+      <button id="btn-rules" class="linkish">规则说明</button>
+    </div>
+  </aside>
+
+  <section class="panel editor-panel" aria-label="源码">
+    <div class="editor-head">
+      <div class="tabs" id="tabs"></div>
+      <div class="editor-meta" id="editor-meta"></div>
+    </div>
+    <div class="editor-scroll" id="editor-scroll">
+      <div class="code" id="code"></div>
+    </div>
+    <div class="editor-foot">
+      <span id="parse-note" class="parse-note"></span>
+    </div>
+  </section>
+
+  <aside class="panel results" aria-label="检查结果">
+    <div class="panel-head results-head">
+      <h2>检查结果</h2>
+      <div class="sev-filters" id="sev-filters">
+        <button class="chip active" data-sev="all">全部 <b id="c-all">0</b></button>
+        <button class="chip high" data-sev="high">高 <b id="c-high">0</b></button>
+        <button class="chip medium" data-sev="medium">中 <b id="c-medium">0</b></button>
+        <button class="chip low" data-sev="low">低 <b id="c-low">0</b></button>
+        <button class="chip info" data-sev="info">提示 <b id="c-info">0</b></button>
+      </div>
+    </div>
+    <div class="summary" id="summary"></div>
+    <div class="finding-list" id="finding-list"></div>
+  </aside>
+</main>
+
+<dialog id="info-dialog" class="dialog">
+  <div class="dialog-head">
+    <h2 id="dialog-title">说明</h2>
+    <button class="btn ghost" id="dialog-close">关闭</button>
+  </div>
+  <div class="dialog-body" id="dialog-body"></div>
+</dialog>
+
+<script src="wasm_exec.js"></script>
+<script src="samples.js"></script>
+<script src="highlight.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
